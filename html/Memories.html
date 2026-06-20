@@ -8,7 +8,16 @@
   <link rel="stylesheet" href="../css/jquery.fullPage.css">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    /* 彩蛋按钮样式 */
+    /* 彩蛋按钮 - 固定在底部，不受 fullPage.js 控制 */
+    .easter-egg-wrapper {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 99999;
+      text-align: center;
+    }
+    
     .easter-egg-btn {
       background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
       color: white;
@@ -19,7 +28,6 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(196, 69, 105, 0.4);
       transition: all 0.3s ease;
-      margin-top: 20px;
       font-family: 'Microsoft YaHei', sans-serif;
     }
     
@@ -33,6 +41,9 @@
     }
     
     @media screen and (max-width: 768px) {
+      .easter-egg-wrapper {
+        bottom: 20px;
+      }
       .easter-egg-btn {
         padding: 12px 28px;
         font-size: 16px;
@@ -320,7 +331,6 @@
             <p>以后还会去好多的地方，见很多不一样的人呢。嘻嘻</p>
             <p>在这个彼此相隔的世界里，答应我一定要保护好自己，照顾好自己，好吗？</p>
             <p>听话小乖，摸摸头。</p>
-            <p><button class="easter-egg-btn" onclick="location.href='EasterEggIntro.html'">🎆 点击有彩蛋</button></p>
           </div>
 
         </div>
@@ -348,7 +358,7 @@
     <script src="../js/jquery.fullPage.min.js"></script>
     <script src="../js/diy.js"></script>
     
-    <!-- 翻页按钮功能 -->
+    <!-- 翻页按钮功能 + 彩蛋按钮点击 -->
     <script>
       // 等待 fullPage.js 完全加载
       $(document).ready(function() {
@@ -371,6 +381,14 @@
           }
         });
         
+        // 彩蛋按钮点击处理
+        $('.easter-egg-btn').on('click touchstart', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          // 直接跳转
+          window.top.location.href = 'EasterEgg.html';
+        });
+        
         // 确保背景显示
         setTimeout(function() {
           $('.bgcolor').css({
@@ -384,6 +402,11 @@
         }, 100);
       });
     </script>
+    
+    <!-- 固定在底部的彩蛋按钮 - 不受 fullPage.js 影响 -->
+    <div class="easter-egg-wrapper">
+      <button class="easter-egg-btn" onclick="window.location.href='EasterEgg.html'">🎆 点击有彩蛋</button>
+    </div>
 </body>
 
 </html>
