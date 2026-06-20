@@ -311,75 +311,47 @@
       <li></li>
     </ul>
   </div>
-  <audio id="bgMusic" src="../music/1.mp3" autoplay="autoplay" loop="loop"></audio>
-  
-  <!-- 音乐播放按钮（当自动播放被浏览器阻止时显示） -->
-  <div id="musicBtn" style="display:none; position:fixed; top:20px; right:20px; z-index:9999; width:50px; height:50px; border-radius:50%; background:rgba(255,107,157,0.8); cursor:pointer; display:flex; align-items:center; justify-content:center;">
-    <span style="color:white; font-size:20px;">&#9654;</span>
-  </div>
+  <audio src="../music/1.mp3" autoplay="autoplay" loop="loop"></audio>
 
     <script src="../js/jquery-1.8.3.min.js"></script>
     <script src="../js/jquery.fullPage.min.js"></script>
     <script src="../js/diy.js"></script>
     
-    <!-- 音频播放处理 -->
+    <!-- 翻页按钮功能 - 支持手机触摸 -->
     <script>
-      var bgMusic = document.getElementById('bgMusic');
-      var musicBtn = document.getElementById('musicBtn');
-      
-      // 尝试自动播放
-      bgMusic.play().catch(function(error) {
-        // 自动播放被阻止，显示播放按钮
-        musicBtn.style.display = 'flex';
-      });
-      
-      // 点击播放按钮播放音乐
-      musicBtn.addEventListener('click', function() {
-        bgMusic.play();
-        musicBtn.style.display = 'none';
-      });
-      
-      // 用户第一次触摸/点击页面时也尝试播放
-      document.addEventListener('click', function() {
-        if (bgMusic.paused) {
-          bgMusic.play().catch(function() {});
-        }
-      }, { once: true });
-      
-      document.addEventListener('touchstart', function() {
-        if (bgMusic.paused) {
-          bgMusic.play().catch(function() {});
-        }
-      }, { once: true });
-    </script>
-    
-    <!-- 翻页按钮功能 -->
-    <script>
-      function scrollToPrev() {
-        // 使用fullPage.js的API向上滚动
-        if (typeof $.fn.fullpage !== 'undefined') {
-          $.fn.fullpage.moveSectionUp();
-        } else {
-          // 如果fullPage未加载，使用原生滚动
-          window.scrollBy({
-            top: -window.innerHeight,
-            behavior: 'smooth'
+      // 等待 fullPage.js 完全加载
+      $(document).ready(function() {
+        // 添加触摸事件支持
+        $('#prevBtn').on('click touchstart', function(e) {
+          e.preventDefault();
+          if ($.fn.fullpage && $.fn.fullpage.moveSectionUp) {
+            $.fn.fullpage.moveSectionUp();
+          } else {
+            window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+          }
+        });
+        
+        $('#nextBtn').on('click touchstart', function(e) {
+          e.preventDefault();
+          if ($.fn.fullpage && $.fn.fullpage.moveSectionDown) {
+            $.fn.fullpage.moveSectionDown();
+          } else {
+            window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+          }
+        });
+        
+        // 确保背景显示
+        setTimeout(function() {
+          $('.bgcolor').css({
+            'position': 'fixed',
+            'top': '0',
+            'left': '0',
+            'width': '100%',
+            'height': '100%',
+            'opacity': '0.9'
           });
-        }
-      }
-      
-      function scrollToNext() {
-        // 使用fullPage.js的API向下滚动
-        if (typeof $.fn.fullpage !== 'undefined') {
-          $.fn.fullpage.moveSectionDown();
-        } else {
-          // 如果fullPage未加载，使用原生滚动
-          window.scrollBy({
-            top: window.innerHeight,
-            behavior: 'smooth'
-          });
-        }
-      }
+        }, 100);
+      });
     </script>
 </body>
 
