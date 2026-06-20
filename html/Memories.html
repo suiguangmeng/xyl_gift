@@ -421,23 +421,17 @@
     </div>
     
     <script>
-      // 彩蛋按钮点击 - 全屏后跳转
+      // 彩蛋按钮点击 - 跳转后全屏
       document.getElementById('easterEggBtn').addEventListener('click', function() {
-        // 先请求全屏
-        var elem = document.documentElement;
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen();
-        } else if (elem.mozRequestFullScreen) {
-          elem.mozRequestFullScreen();
-        } else if (elem.msRequestFullscreen) {
-          elem.msRequestFullscreen();
+        // 先退出全屏（如果有的话），然后跳转
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
         }
-        // 延迟跳转，确保全屏已触发
-        setTimeout(function() {
-          window.location.href = 'EasterEgg.html';
-        }, 300);
+        
+        // 跳转到彩蛋页面
+        window.location.href = 'EasterEgg.html';
       });
     </script>
 </body>

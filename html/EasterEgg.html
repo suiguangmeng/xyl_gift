@@ -49,6 +49,10 @@
   <canvas></canvas>
 
   <script>
+    // 全屏缩放检测变量
+    var hasZoomed = false;
+    var lastAlertTime = 0;
+    var alertInterval = 5000; // 5秒内不重复弹窗
 
     function GetRequest() {
       var url = decodeURI(location.search); //获取url中"?"符后的字串
@@ -251,6 +255,77 @@
       }
     }
 
+    // ========== 全屏和缩放检测功能 ==========
+    
+    // 进入全屏
+    function enterFullscreen() {
+      var docElm = document.documentElement;
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+      } else if (docElm.webkitRequestFullscreen) {
+        docElm.webkitRequestFullscreen();
+      } else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+      } else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+      }
+    }
+    
+    // 检测是否全屏
+    function isFullscreen() {
+      return !!(document.fullscreenElement || 
+                document.webkitFullscreenElement || 
+                document.mozFullScreenElement || 
+                document.msFullscreenElement);
+    }
+    
+    // 检测缩放状态
+    function checkZoom() {
+      // 通过比较视觉视口宽度和布局视口宽度来判断缩放
+      var visualWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+      var layoutWidth = window.innerWidth;
+      
+      // 如果视觉视口宽度明显小于布局视口宽度，说明用户缩小了
+      if (visualWidth < layoutWidth * 0.9) {
+        hasZoomed = true;
+      }
+    }
+    
+    // 弹窗提醒（带时间间隔）
+    function showZoomAlert() {
+      var now = Date.now();
+      if (now - lastAlertTime > alertInterval) {
+        lastAlertTime = now;
+        alert("💡 小提示：双指捏合缩小可以看得更清楚哦！烟花效果会更好看~");
+      }
+    }
+    
+    // 页面加载后自动全屏
+    window.addEventListener('load', function() {
+      setTimeout(enterFullscreen, 100);
+    });
+    
+    // 监听用户是否进行过缩放操作
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', checkZoom);
+      window.visualViewport.addEventListener('scroll', checkZoom);
+    }
+    
+    // 3秒后检查是否缩放过，如果没有则弹窗提醒
+    setTimeout(function() {
+      checkZoom();
+      if (!hasZoomed) {
+        showZoomAlert();
+      }
+    }, 3000);
+    
+    // 监听全屏状态变化
+    document.addEventListener('fullscreenchange', function() {
+      if (!isFullscreen()) {
+        // 用户退出了全屏，尝试重新进入
+        setTimeout(enterFullscreen, 100);
+      }
+    });
 
   </script>
 
