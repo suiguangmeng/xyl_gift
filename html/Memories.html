@@ -18,6 +18,13 @@
       text-align: center;
     }
     
+    .easter-egg-hint {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 12px;
+      margin-bottom: 8px;
+      font-family: 'Microsoft YaHei', sans-serif;
+    }
+    
     .easter-egg-btn {
       background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
       color: white;
@@ -47,6 +54,9 @@
       .easter-egg-btn {
         padding: 12px 28px;
         font-size: 16px;
+      }
+      .easter-egg-hint {
+        font-size: 11px;
       }
     }
     
@@ -405,6 +415,7 @@
     
     <!-- 固定在底部的彩蛋按钮 - 不受 fullPage.js 影响 -->
     <div class="easter-egg-wrapper">
+      <div class="easter-egg-hint">尽量全部看完再点击哦 💕</div>
       <button class="easter-egg-btn" onclick="window.location.href='EasterEgg.html'">🎆 点击有彩蛋</button>
     </div>
 </body>
