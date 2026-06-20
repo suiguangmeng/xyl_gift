@@ -8,25 +8,28 @@
   <link rel="stylesheet" href="../css/jquery.fullPage.css">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    /* 烟花 canvas 样式 */
-    #firework-canvas, #firework-canvas2, #firework-canvas3 {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9998;
+    /* 彩蛋按钮样式 */
+    .easter-egg-btn {
+      background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+      color: white;
+      border: none;
+      padding: 15px 35px;
+      font-size: 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(196, 69, 105, 0.4);
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      font-family: 'Microsoft YaHei', sans-serif;
     }
     
-    #firework-canvas {
-      z-index: 9996;
+    .easter-egg-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(196, 69, 105, 0.6);
     }
-    #firework-canvas2 {
-      z-index: 9997;
-    }
-    #firework-canvas3 {
-      z-index: 9998;
+    
+    .easter-egg-btn:active {
+      transform: scale(0.95);
     }
     
     @media screen and (max-width: 768px) {
@@ -317,18 +320,14 @@
             <p>以后还会去好多的地方，见很多不一样的人呢。嘻嘻</p>
             <p>在这个彼此相隔的世界里，答应我一定要保护好自己，照顾好自己，好吗？</p>
             <p>听话小乖，摸摸头。</p>
+            <p><button class="easter-egg-btn" onclick="location.href='EasterEggIntro.html'">🎆 点击有彩蛋</button></p>
           </div>
+
         </div>
         <div class="ly-triangle82"></div>
       </div>
 
     </div>
-    
-    <!-- 烟花效果 canvas -->
-    <canvas id="firework-canvas"></canvas>
-    <canvas id="firework-canvas2"></canvas>
-    <canvas id="firework-canvas3"></canvas>
-    
     <!--试验-->
     <ul class="bg-bubbles">
       <li></li>
@@ -351,209 +350,9 @@
     
     <!-- 翻页按钮功能 -->
     <script>
-      // 烟花动画类
-      class FireworkShard {
-        constructor(x, y, hue) {
-          this.x = x;
-          this.y = y;
-          this.hue = hue;
-          this.lightness = 50;
-          this.size = 15 + Math.random() * 10;
-          const angle = Math.random() * 2 * Math.PI;
-          const blastSpeed = 1 + Math.random() * 6;
-          this.xSpeed = Math.cos(angle) * blastSpeed;
-          this.ySpeed = Math.sin(angle) * blastSpeed;
-          this.target = getFireworkTarget();
-          this.ttl = 100;
-          this.timer = 0;
-        }
-        draw(ctx) {
-          ctx.fillStyle = `hsl(${this.hue}, 100%, ${this.lightness}%)`;
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-          ctx.closePath();
-          ctx.fill();
-        }
-        update() {
-          if (this.target) {
-            const dx = this.target.x - this.x;
-            const dy = this.target.y - this.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            const a = Math.atan2(dy, dx);
-            const tx = Math.cos(a) * 5;
-            const ty = Math.sin(a) * 5;
-            this.size = lerp(this.size, 1.5, 0.05);
-
-            if (dist < 5) {
-              this.lightness = lerp(this.lightness, 100, 0.01);
-              this.xSpeed = this.ySpeed = 0;
-              this.x = lerp(this.x, this.target.x + fireworkFidelity / 2, 0.05);
-              this.y = lerp(this.y, this.target.y + fireworkFidelity / 2, 0.05);
-              this.timer += 1;
-            } else if (dist < 10) {
-              this.lightness = lerp(this.lightness, 100, 0.01);
-              this.xSpeed = lerp(this.xSpeed, tx, 0.1);
-              this.ySpeed = lerp(this.ySpeed, ty, 0.1);
-              this.timer += 1;
-            } else {
-              this.xSpeed = lerp(this.xSpeed, tx, 0.02);
-              this.ySpeed = lerp(this.ySpeed, ty, 0.02);
-            }
-          } else {
-            this.ySpeed += 0.05;
-            this.size = lerp(this.size, 1, 0.05);
-
-            if (this.y > fireworkCanvas.height) {
-              const idx = fireworkShards.indexOf(this);
-              if (idx > -1) fireworkShards.splice(idx, 1);
-            }
-          }
-          this.x = this.x + this.xSpeed;
-          this.y = this.y + this.ySpeed;
-        }
-      }
-
-      class FireworkRocket {
-        constructor() {
-          const quarterW = fireworkCanvas.width / 4;
-          this.x = quarterW + Math.random() * (fireworkCanvas.width - quarterW);
-          this.y = fireworkCanvas.height - 15;
-          this.angle = Math.random() * Math.PI / 4 - Math.PI / 6;
-          this.blastSpeed = 6 + Math.random() * 7;
-          this.xSpeed = Math.sin(this.angle) * this.blastSpeed;
-          this.ySpeed = -Math.cos(this.angle) * this.blastSpeed;
-          this.hue = Math.floor(Math.random() * 360);
-        }
-        draw(ctx) {
-          ctx.save();
-          ctx.translate(this.x, this.y);
-          ctx.rotate(Math.atan2(this.ySpeed, this.xSpeed) + Math.PI / 2);
-          ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
-          ctx.fillRect(0, 0, 5, 15);
-          ctx.restore();
-        }
-        update() {
-          this.x = this.x + this.xSpeed;
-          this.y = this.y + this.ySpeed;
-          this.ySpeed += 0.1;
-        }
-        explode() {
-          for (let i = 0; i < 70; i++) {
-            fireworkShards.push(new FireworkShard(this.x, this.y, this.hue));
-          }
-        }
-      }
-
-      // 初始化烟花
-      var fireworkCanvas, fireworkCanvas2, fireworkCanvas3;
-      var fireworkCtx1, fireworkCtx2, fireworkCtx3;
-      var fireworkRockets = [];
-      var fireworkShards = [];
-      var fireworkTargets = [];
-      var fireworkFidelity = 3;
-      var fireworkCounter = 0;
-      var fireworkTextWidth = 99999999;
-      var fireworkFontSize = 200;
-      var fireworkLerp = (a, b, t) => Math.abs(b - a) > 0.1 ? a + t * (b - a) : b;
-
-      function initFireworks() {
-        fireworkCanvas = document.getElementById('firework-canvas');
-        fireworkCanvas2 = document.getElementById('firework-canvas2');
-        fireworkCanvas3 = document.getElementById('firework-canvas3');
-        if (!fireworkCanvas || !fireworkCanvas2 || !fireworkCanvas3) return;
-        
-        fireworkCtx1 = fireworkCanvas.getContext('2d');
-        fireworkCtx2 = fireworkCanvas2.getContext('2d');
-        fireworkCtx3 = fireworkCanvas3.getContext('2d');
-        
-        fireworkCanvas.width = fireworkCanvas2.width = fireworkCanvas3.width = window.innerWidth;
-        fireworkCanvas.height = fireworkCanvas2.height = fireworkCanvas3.height = window.innerHeight;
-        
-        fireworkCtx1.fillStyle = '#000';
-        
-        const text = '许滢鹭,生日快乐！';
-        let tempFontSize = 200;
-        while (fireworkTextWidth > window.innerWidth) {
-          fireworkCtx1.font = `900 ${tempFontSize--}px Arial`;
-          fireworkTextWidth = fireworkCtx1.measureText(text).width;
-        }
-        fireworkFontSize = tempFontSize;
-        
-        var tempCanvas = document.createElement('canvas');
-        tempCanvas.width = fireworkTextWidth;
-        tempCanvas.height = fireworkFontSize * 1.5;
-        var tempCtx = tempCanvas.getContext('2d');
-        tempCtx.font = `900 ${fireworkFontSize}px Arial`;
-        tempCtx.fillText(text, 0, fireworkFontSize);
-        
-        var imgData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
-        for (var i = 0; i < imgData.data.length; i += 4) {
-          var alpha = imgData.data[i + 3];
-          var x = Math.floor(i / 4) % imgData.width;
-          var y = Math.floor(i / 4 / imgData.width);
-          if (alpha && x % fireworkFidelity === 0 && y % fireworkFidelity === 0) {
-            fireworkTargets.push({ x, y });
-          }
-        }
-        
-        fireworkCtx3.fillStyle = '#FFF';
-        fireworkCtx3.shadowColor = '#FFF';
-        fireworkCtx3.shadowBlur = 25;
-        
-        startFireworkLoop();
-      }
-
-      function getFireworkTarget() {
-        if (fireworkTargets.length > 0) {
-          var idx = Math.floor(Math.random() * fireworkTargets.length);
-          var target = fireworkTargets[idx];
-          fireworkTargets.splice(idx, 1);
-          return {
-            x: target.x + fireworkCanvas.width / 2 - fireworkTextWidth / 2,
-            y: target.y + fireworkCanvas.height / 2 - fireworkFontSize / 2
-          };
-        }
-        return null;
-      }
-
-      function startFireworkLoop() {
-        function loop() {
-          fireworkCtx2.fillStyle = "rgba(0, 0, 0, .1)";
-          fireworkCtx2.fillRect(0, 0, fireworkCanvas.width, fireworkCanvas.height);
-          fireworkCounter++;
-
-          if (fireworkCounter % 15 === 0) {
-            fireworkRockets.push(new FireworkRocket());
-          }
-          
-          fireworkRockets.forEach((r, i) => {
-            r.draw(fireworkCtx2);
-            r.update();
-            if (r.ySpeed > 0) {
-              r.explode();
-              fireworkRockets.splice(i, 1);
-            }
-          });
-
-          fireworkShards.forEach((s, i) => {
-            s.draw(fireworkCtx2);
-            s.update();
-            if (s.timer >= s.ttl || s.lightness >= 99) {
-              if (s.target) {
-                fireworkCtx3.fillRect(s.target.x, s.target.y, fireworkFidelity + 1, fireworkFidelity + 1);
-              }
-              fireworkShards.splice(i, 1);
-            }
-          });
-
-          requestAnimationFrame(loop);
-        }
-        loop();
-      }
-
-      // 页面加载完成后初始化烟花
+      // 等待 fullPage.js 完全加载
       $(document).ready(function() {
-        // 翻页按钮
+        // 添加触摸事件支持
         $('#prevBtn').on('click touchstart', function(e) {
           e.preventDefault();
           if ($.fn.fullpage && $.fn.fullpage.moveSectionUp) {
@@ -571,9 +370,6 @@
             window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
           }
         });
-        
-        // 初始化烟花
-        initFireworks();
         
         // 确保背景显示
         setTimeout(function() {
