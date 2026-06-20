@@ -8,8 +8,12 @@
   <link rel="stylesheet" href="../css/jquery.fullPage.css">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    /* 彩蛋按钮样式 */
+    /* 彩蛋按钮样式 - 固定在底部中间 */
     .easter-egg-btn {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
       background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
       color: white;
       border: none;
@@ -19,23 +23,24 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(196, 69, 105, 0.4);
       transition: all 0.3s ease;
-      margin-top: 20px;
+      z-index: 99999;
       font-family: 'Microsoft YaHei', sans-serif;
     }
     
     .easter-egg-btn:hover {
-      transform: scale(1.05);
+      transform: translateX(-50%) scale(1.05);
       box-shadow: 0 6px 20px rgba(196, 69, 105, 0.6);
     }
     
     .easter-egg-btn:active {
-      transform: scale(0.95);
+      transform: translateX(-50%) scale(0.95);
     }
     
     @media screen and (max-width: 768px) {
       .easter-egg-btn {
         padding: 12px 28px;
         font-size: 16px;
+        bottom: 70px;
       }
     }
     
@@ -378,13 +383,6 @@
           window.location.href = 'EasterEgg.html';
           return false;
         });
-        
-        // 彩蛋按钮点击处理 - 使用 capture 阶段确保不被拦截
-        document.querySelector('.easter-egg-btn').addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          window.location.href = 'EasterEgg.html';
-        }, true);  // true = capture 阶段
         
         // 确保背景显示
         setTimeout(function() {
