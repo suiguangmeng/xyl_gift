@@ -173,8 +173,20 @@
     const targets = [];
     const fidelity = 3;
     let counter = 0;
-    c2.width = c3.width = window.innerWidth;
-    c2.height = c3.height = window.innerHeight;
+    
+    function resizeCanvas() {
+      c2.width = c3.width = window.innerWidth;
+      c2.height = c3.height = window.innerHeight;
+    }
+    
+    resizeCanvas();
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('orientationchange', function() {
+      setTimeout(resizeCanvas, 100);
+    });
+    
     ctx1.fillStyle = '#000';
     const text = '许滢鹭,生日快乐！'
     let textWidth = 99999999;
