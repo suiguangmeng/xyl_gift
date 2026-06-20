@@ -7,18 +7,18 @@
     <title>Happy Birthday</title>
     
     <!-- 预加载关键资源 -->
-    <link rel="preload" href="/xyl_gift/css/styles.css" as="style">
-    <link rel="preload" href="/xyl_gift/css/style.css" as="style">
-    <link rel="preload" href="/xyl_gift/css/styless.css" as="style">
-    <link rel="preload" href="/xyl_gift/css/jquery.fullPage.css" as="style">
-    <link rel="preload" href="/xyl_gift/js/jquery-2.1.1.min.js" as="script">
-    <link rel="preload" href="/xyl_gift/js/jquery-1.8.3.min.js" as="script">
-    <link rel="preload" href="/xyl_gift/js/jquery.fullPage.min.js" as="script">
-    <link rel="preload" href="/xyl_gift/js/diy.js" as="script">
-    <link rel="preload" href="/xyl_gift/js/indexl.js" as="script">
-    <link rel="preload" href="/xyl_gift/music/1.mp3" as="audio">
-    <link rel="preload" href="/xyl_gift/music/2.mp3" as="audio">
-    <link rel="preload" href="/xyl_gift/img/HappyBirthday.png" as="image">
+    <link rel="preload" href="./css/styles.css" as="style">
+    <link rel="preload" href="./css/style.css" as="style">
+    <link rel="preload" href="./css/styless.css" as="style">
+    <link rel="preload" href="./css/jquery.fullPage.css" as="style">
+    <link rel="preload" href="./js/jquery-2.1.1.min.js" as="script">
+    <link rel="preload" href="./js/jquery-1.8.3.min.js" as="script">
+    <link rel="preload" href="./js/jquery.fullPage.min.js" as="script">
+    <link rel="preload" href="./js/diy.js" as="script">
+    <link rel="preload" href="./js/indexl.js" as="script">
+    <link rel="preload" href="./music/1.mp3" as="audio">
+    <link rel="preload" href="./music/2.mp3" as="audio">
+    <link rel="preload" href="./img/HappyBirthday.png" as="image">
     
     <style>
         /* 加载页面样式 */
@@ -273,8 +273,8 @@
             
             init: function() {
                 // 预加载音频
-                this.audio1 = new Audio('/xyl_gift/music/1.mp3');
-                this.audio2 = new Audio('/xyl_gift/music/2.mp3');
+                this.audio1 = new Audio('./music/1.mp3');
+                this.audio2 = new Audio('./music/2.mp3');
                 this.audio1.loop = true;
                 this.audio2.loop = true;
                 this.audio1.volume = 0.7;
@@ -331,22 +331,22 @@
     <script>
         // 预加载资源列表
         var resourcesToLoad = [
-            '/xyl_gift/css/styles.css',
-            '/xyl_gift/css/style.css',
-            '/xyl_gift/css/styless.css',
-            '/xyl_gift/css/jquery.fullPage.css',
-            '/xyl_gift/js/jquery-1.8.3.min.js',
-            '/xyl_gift/js/jquery.fullPage.min.js',
-            '/xyl_gift/js/diy.js',
-            '/xyl_gift/js/indexl.js',
-            '/xyl_gift/img/HappyBirthday.png',
-            '/xyl_gift/img/happy.jpg',
-            '/xyl_gift/img/zt.jpg',
-            '/xyl_gift/img/di2.png',
-            '/xyl_gift/img/di21.png',
-            '/xyl_gift/img/di24.png',
-            '/xyl_gift/music/1.mp3',
-            '/xyl_gift/music/2.mp3'
+            './css/styles.css',
+            './css/style.css',
+            './css/styless.css',
+            './css/jquery.fullPage.css',
+            './js/jquery-1.8.3.min.js',
+            './js/jquery.fullPage.min.js',
+            './js/diy.js',
+            './js/indexl.js',
+            './img/HappyBirthday.png',
+            './img/happy.jpg',
+            './img/zt.jpg',
+            './img/di2.png',
+            './img/di21.png',
+            './img/di24.png',
+            './music/1.mp3',
+            './music/2.mp3'
         ];
         
         var loadedCount = 0;
