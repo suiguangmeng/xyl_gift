@@ -341,6 +341,7 @@
             <p>以后还会去好多的地方，见很多不一样的人呢。嘻嘻</p>
             <p>在这个彼此相隔的世界里，答应我一定要保护好自己，照顾好自己，好吗？</p>
             <p>听话小乖，摸摸头。</p>
+            <p>好啦，没有喽，去看彩蛋吧~</p>
           </div>
 
         </div>
@@ -416,8 +417,29 @@
     <!-- 固定在底部的彩蛋按钮 - 不受 fullPage.js 影响 -->
     <div class="easter-egg-wrapper">
       <div class="easter-egg-hint">尽量全部看完再点击哦 💕</div>
-      <button class="easter-egg-btn" onclick="window.location.href='EasterEgg.html'">🎆 点击有彩蛋</button>
+      <button class="easter-egg-btn" id="easterEggBtn">🎆 点击有彩蛋</button>
     </div>
+    
+    <script>
+      // 彩蛋按钮点击 - 全屏后跳转
+      document.getElementById('easterEggBtn').addEventListener('click', function() {
+        // 先请求全屏
+        var elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+          elem.mozRequestFullScreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        }
+        // 延迟跳转，确保全屏已触发
+        setTimeout(function() {
+          window.location.href = 'EasterEgg.html';
+        }, 300);
+      });
+    </script>
 </body>
 
 </html>
