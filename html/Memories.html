@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday</title>
+  <link rel="stylesheet" href="../css/jquery.fullPage.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* 翻页按钮样式 */
+    .nav-buttons {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .nav-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .nav-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6);
+    }
+    
+    .nav-btn:active {
+      transform: scale(0.95);
+    }
+    
+    /* 手机适配样式 */
+    @media screen and (max-width: 768px) {
+      .ly-stxt01, .ly-stxt02, .ly-stxt03, .ly-stxt04, .ly-stxt05,
+      .ly-stxt06, .ly-stxt07, .ly-stxt08, .ly-stxt09, .ly-stxt10 {
+        font-size: 14px !important;
+      }
+      .ly-img11 {
+        width: 80% !important;
+        height: auto !important;
+      }
+      .section {
+        padding: 20px 10px !important;
+      }
+      .fp-controlArrow {
+        display: none !important;
+      }
+      .nav-buttons {
+        right: 10px;
+        gap: 10px;
+      }
+      .nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .ly-stxt01, .ly-stxt02, .ly-stxt03, .ly-stxt04, .ly-stxt05,
+      .ly-stxt06, .ly-stxt07, .ly-stxt08, .ly-stxt09, .ly-stxt10 {
+        font-size: 12px !important;
+        line-height: 1.6 !important;
+      }
+      .ly-img11 {
+        width: 90% !important;
+      }
+      .section {
+        padding: 10px 5px !important;
+      }
+      .nav-buttons {
+        right: 5px;
+      }
+      .nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
+    }
+    
+    @media screen and (orientation: portrait) and (max-width: 768px) {
+      .section {
+        min-height: 100vh !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 翻页按钮 -->
+  <div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="scrollToPrev()">&#8593;</button>
+    <button class="nav-btn" id="nextBtn" onclick="scrollToNext()">&#8595;</button>
+  </div>
+  
+  <div class="bgcolor">
+    <div style="z-index:100;" id="dowebok">
+      <!--第一屏-->
+      <div class="section">
+        <div class="ly-box01">
+          <div class="ly-txt01">
+            <p class="ly-stxt01">小夕，今天是你的生日哦</p>
+            <p class="ly-stxt02">还记得我之前说：</p>
+            <p class="ly-stxt03">给你一个难忘的生日</p>
+            <p class="ly-stxt04">不知道这个算不算</p>
+            <!-- ，在认清 -->
+            <p class="ly-stxt05">虽不精致，但也算用心</p>
+            <!-- <p class="ly-stxt05">生活的真相后，更加热爱它吧！</p> -->
+          </div>
+          <div class="ly-txt02">
+            <p class="ly-stxt06">愿你时常带着笑</p>
+            <p class="ly-stxt07">生活没有憾事，一帆风顺</p>
+            <p class="ly-stxt08">身边益友相伴</p>
+            <p class="ly-stxt09">内心温柔且有原则</p>
+            <p class="ly-stxt10">美好常在！</p>
+          </div>
+        </div>
+      </div>
+
+      <!--第二屏-->
+      <div class="section">
+        <div class="timeline"></div>
+        <div class="timepoint11"></div>
+        <div class="ly-box11">
+          <div class="ly-txt11" style="width:100%;height:10%;left:10%">
+            <img class="ly-img11" src="../img/HappyBirthday.png" style="width:100%;height:100%">
+          </div>
+          <div class="ly-txt12">
+
+          </div>
+          <div class="ly-imgbox11" style="height:80%">
+            <img class="ly-img11" src="../img/happy.jpg" style="height:100%">
+          </div>
+        </div>
+        <div class="ly-triangle11"></div>
+
+        <div class="ly-box12">
+          <div class="ly-txt13" style="width:100%;height:10%;left:10%">
+            <img class="ly-img11" src="../img/HappyBirthday.png" style="width:100%;height:100%">
+          </div>
+          <div class="ly-txt14">
+            <p>小鹭</p>
+            <p>祝你平安顺遂</p>
+            <p>自在舒心，四季无忧</p>
+            <p>永远被爱意、温柔包裹</p>
+            <p>所遇皆温柔，所求皆如愿</p>
+          </div>
+          <div class="ly-imgbox11" style="height:50%">
+            <img class="ly-img11" src="../img/zt.jpg" style="height:100%">
+          </div>
+        </div>
+        <div class="ly-triangle12"></div>
+
+      </div>
+
+      <!--第三屏-->
+
+      <div class="section">
+        <div class="timeline"></div>
+        <div class="timepoint21"></div>
+        <div class="ly-box21">
+          <div class="ly-txt21">
+            <p style="writing-mode: vertical-rl; font-size: 28px;">角色祝福</p>
+          </div>
+          <div class="ly-imgbox21">
+            <img class="ly-img21" src="../img/di2.png">
+          </div>
+        </div>
+        <div class="ly-triangle21"></div>
+
+        <div class="ly-box22">
+          <div class="ly-txt23" style="width:100%;height:10%;left:10%">
+            <img class="ly-img11" src="../img/HappyBirthday.png" style="width:200%;height:100%">
+          </div>
+          <div class="ly-txt24">
+            <p>我平常不会理会凡人的生辰</p>
+            <p>如果是你的话</p>
+            <p>我会给你折一只梧桐树叶蝴蝶</p>
+            <p>生日快乐！</p>
+          </div>
+          <div class="ly-imgbox22">
+            <img class="ly-img22" src="../img/di21.png">
+          </div>
+        </div>
+        <div class="ly-triangle22"></div>
+
+        <div class="ly-box23">
+          <div class="ly-txt25" style="width:100%;height:10%;left:10%">
+            <img class="ly-img11" src="../img/HappyBirthday.png" style="width:100%;height:100%">
+          </div>
+          <div class="ly-txt26">
+            <p>得知今日是你生日</p>
+            <p>我特意写了新诗歌</p>
+            <p>流光换日月</p>
+            <p>鹤归云起庆生时</p>
+            <p>生日快乐！</p>
+          </div>
+          <div class="ly-imgbox23" style="height: 80%">
+            <img class="ly-img23" src="../img/di24.png" style="width: 100%">
+          </div>
+        </div>
+        <div class="ly-triangle23"></div>
+      </div>
+
+      <!--第四屏-->
+
+      <div class="section">
+        <div class="timeline"></div>
+        <div class="timepoint31"></div>
+        <div class="ly-box31">
+          <div class="ly-txt31" style="width:100%;height:10%;left:10%">
+            <img class="ly-img11" src="../img/HappyBirthday.png" style="width:100%;height:100%">
+          </div>
+          <div class="ly-txt32">
+            <p>小时透的话：</p>
+            <p>你已经做的很好了</p>
+            <p>我不希望你被生活打败</p>
+            <p>可以的话，我希望你长命百岁🌈</p>
+          </div>
+          <div class="ly-imgbox31" style="height:50%">
+            <img class="ly-img31" src="../img/di22.png" style="height:100%">
+          </div>
+        </div>
+        <div class="ly-triangle31"></div>
+
+        <div class="ly-box32">
+          <div class="ly-txt33" style="width:100%;height:15%;left:10%">
+            <img class="ly-img11" src="../img/HappyBirthday.png" style="width:100%;height:100%">
+          </div>
+          <div class="ly-txt34">
+            <p>阿灏：生日可是一种珍贵的礼物，要好好珍惜哦。所以今天就把烦恼放一边，好好休息啦。</p>
+          </div>
+          <div class="ly-imgbox31">
+            <img class="ly-img31" src="../img/rest.png" style="height:100%">
+          </div>
+        </div>
+        <div class="ly-triangle32"></div>
+      </div>
+
+
+      <div class="section">
+        <div class="timeline"></div>
+        <div class="timepoint11"></div>
+        <div class="ly-box81">
+          <div class="ly-txt11" style="width:100%;height:10%;left:10%">
+            <img class="ly-img11" src="../img/HappyBirthday.png" style="width:200%;height:200%">
+          </div>
+          <div class="ly-txt82" style="top:8%">
+            <p class="wwww1">来自朋友的祝福</p>
+            <p class="wwww1">许滢鹭，生日快乐！</p>
+            <p class="wwww1">岁岁平安，好运连连</p>
+            <p class="wwww1">天天开心，没有任何烦恼</p>
+            <p class="wwww1">无病无灾，永远开心健康</p>
+            <p class="wwww1">愿你不失天真</p>
+            <p class="wwww1">永远善良！</p>
+          </div>
+          <div class="ly-imgbox81">
+            <img class="ly-img81" src="../img/haha.png">
+          </div>
+        </div>
+        <div class="ly-triangle11"></div>
+
+        <div class="ly-box82">
+          <div class="ly-txt13" style="width:100%;height:10%;left:10%">
+            <img class="ly-img11" src="../img/HappyBirthday.png" style="width:100%;height:100%">
+          </div>
+          <div class="ly-txt84">
+            <p>Hi!许滢鹭，15岁生日快乐哦！</p>
+            <p>不知不觉，我们已经认识100多天啦</p>
+            <p>说起来也是奇妙，很开心与你相遇哦</p>
+            <p>我们之间或许有小矛盾，有不开心，但更多的是我们都在成长，在一起向前哦</p>
+            <p>新的一岁里，希望你每天都能开开心心，胃口变好，长高高！</p>
+            <p>以后还会去好多的地方，见很多不一样的人呢。嘻嘻</p>
+            <p>在这个彼此相隔的世界里，答应我一定要保护好自己，照顾好自己，好吗？</p>
+            <p>听话小乖，摸摸头。</p>
+            <p><a href="./EasterEgg.html">点击有彩蛋</a>  </p>
+          </div>
+
+        </div>
+        <div class="ly-triangle82"></div>
+      </div>
+
+    </div>
+    <!--试验-->
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <audio src="../music/1.mp3" autoplay="autoplay" loop="loop"></audio>
+
+    <script src="../js/jquery-1.8.3.min.js"></script>
+    <script src="../js/jquery.fullPage.min.js"></script>
+    <script src="../js/diy.js"></script>
+    
+    <!-- 翻页按钮功能 -->
+    <script>
+      function scrollToPrev() {
+        // 使用fullPage.js的API向上滚动
+        if (typeof $.fn.fullpage !== 'undefined') {
+          $.fn.fullpage.moveSectionUp();
+        } else {
+          // 如果fullPage未加载，使用原生滚动
+          window.scrollBy({
+            top: -window.innerHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
+      
+      function scrollToNext() {
+        // 使用fullPage.js的API向下滚动
+        if (typeof $.fn.fullpage !== 'undefined') {
+          $.fn.fullpage.moveSectionDown();
+        } else {
+          // 如果fullPage未加载，使用原生滚动
+          window.scrollBy({
+            top: window.innerHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
+    </script>
+</body>
+
+</html>
