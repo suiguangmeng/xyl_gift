@@ -379,6 +379,13 @@
           return false;
         });
         
+        // 彩蛋按钮点击处理 - 使用 capture 阶段确保不被拦截
+        document.querySelector('.easter-egg-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = 'EasterEgg.html';
+        }, true);  // true = capture 阶段
+        
         // 确保背景显示
         setTimeout(function() {
           $('.bgcolor').css({
