@@ -80,6 +80,31 @@
 	<script src="../js/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="../js/jquery-1.8.4.min.js" type="text/javascript"></script>
 	
+	<!-- 登录按钮触发音频 -->
+	<script>
+		$(document).ready(function() {
+			$('#login-button').on('click touchstart', function(e) {
+				e.preventDefault();
+				
+				// 触发父页面的音频播放（用户交互后可以播放）
+				if (window.parent && window.parent.AudioManager) {
+					window.parent.AudioManager.playBirthdayMusic();
+				}
+				
+				// 获取用户名
+				var userName = $('#userName').val();
+				
+				// 显示加载动画后跳转
+				$('.wrapper').addClass('form-success');
+				
+				setTimeout(function() {
+					// 跳转到动画页面
+					window.location.href = 'index1.html?name=' + encodeURIComponent(userName);
+				}, 800);
+			});
+		});
+	</script>
+	
 	<!-- 横屏自动全屏 -->
 	<script>
 		// 进入全屏模式

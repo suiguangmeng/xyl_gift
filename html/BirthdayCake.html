@@ -270,9 +270,8 @@
     <li></li>
   </ul>
   <script src='../js/jquery.js'></script>
-  <audio src="../music/2.mp3" autoplay="autoplay" loop="loop">
   
-  <!-- 不喜欢按钮弹窗 -->
+  <!-- 喜欢按钮触发音频切换 -->
   <script>
     // 进入全屏模式函数
     function enterFullscreen() {
@@ -289,9 +288,14 @@
     }
 
     // 给"喜欢"按钮添加点击事件
-    $('.lk1').click(function(e) {
+    $('.lk1').on('click touchstart', function(e) {
       // 阻止默认跳转，先进入全屏
       e.preventDefault();
+      
+      // 触发父页面的音频切换到 Memories 音乐
+      if (window.parent && window.parent.AudioManager) {
+        window.parent.AudioManager.playMemoriesMusic();
+      }
       
       // 进入全屏
       enterFullscreen();
@@ -303,7 +307,8 @@
     });
 
     // 给"不喜欢"按钮添加点击事件
-    $('.lk2').click(function() {
+    $('.lk2').on('click touchstart', function(e) {
+      e.preventDefault();
       // 显示温馨提示弹窗
       alert('真的让人伤心，可不可以不这样，就选喜欢嘛 💔');
       
