@@ -103,6 +103,13 @@
 </head>
 
 <body>
+  <!-- 点击开始遮罩 -->
+  <div id="start-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#ee9ca7,#ffd1dc);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+    <h1 style="color:#fff;font-size:32px;margin-bottom:20px;text-shadow:2px 2px 4px rgba(0,0,0,0.2);">Happy Birthday</h1>
+    <p style="color:#fff;font-size:18px;margin-bottom:30px;">点击开始查看祝福</p>
+    <button id="start-btn" style="padding:15px 40px;font-size:20px;background:linear-gradient(135deg,#ff6b9d,#c44569);color:#fff;border:none;border-radius:30px;cursor:pointer;box-shadow:0 4px 15px rgba(255,107,157,0.4);">开始</button>
+  </div>
+  
   <!-- 翻页按钮 -->
   <div class="nav-buttons">
     <button class="nav-btn" id="prevBtn" onclick="scrollToPrev()">&#8593;</button>
@@ -344,6 +351,20 @@
           });
         }
       }
+      
+      // 点击开始按钮处理
+      document.getElementById('start-btn').addEventListener('click', function() {
+        var overlay = document.getElementById('start-overlay');
+        overlay.style.display = 'none';
+        
+        // 播放音频
+        var audio = document.querySelector('audio');
+        if (audio) {
+          audio.play().catch(function(e) {
+            console.log('音频播放失败:', e);
+          });
+        }
+      });
     </script>
 </body>
 
