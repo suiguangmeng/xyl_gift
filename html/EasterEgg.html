@@ -173,20 +173,8 @@
     const targets = [];
     const fidelity = 3;
     let counter = 0;
-    
-    function resizeCanvas() {
-      c2.width = c3.width = window.innerWidth;
-      c2.height = c3.height = window.innerHeight;
-    }
-    
-    resizeCanvas();
-    
-    // 监听窗口大小变化
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('orientationchange', function() {
-      setTimeout(resizeCanvas, 100);
-    });
-    
+    c2.width = c3.width = window.innerWidth;
+    c2.height = c3.height = window.innerHeight;
     ctx1.fillStyle = '#000';
     const text = '许滢鹭,生日快乐！'
     let textWidth = 99999999;
@@ -262,6 +250,44 @@
         return { x, y };
       }
     }
+
+    // 自动全屏功能
+    function enterFullscreen() {
+      var docElm = document.documentElement;
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+      } else if (docElm.webkitRequestFullscreen) {
+        docElm.webkitRequestFullscreen();
+      } else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+      } else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+      }
+    }
+
+    // 检测是否全屏
+    function isFullscreen() {
+      return !!(document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement);
+    }
+
+    // 页面加载后自动全屏
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        if (!isFullscreen()) {
+          enterFullscreen();
+        }
+      }, 500);
+    });
+
+    // 点击任意位置也可触发全屏
+    document.addEventListener('click', function() {
+      if (!isFullscreen()) {
+        enterFullscreen();
+      }
+    }, { once: true });
 
 
   </script>
